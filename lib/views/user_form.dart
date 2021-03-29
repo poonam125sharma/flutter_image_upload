@@ -3,6 +3,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../helpers/db_helper.dart';
+import '../models/image.dart';
 
 
 class UserForm extends StatefulWidget {
@@ -44,17 +47,70 @@ class _UserFormState extends State<UserForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Icon(Icons.arrow_back, color: Colors.black,),
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: GestureDetector(
+              onTap: null,
+              child: SvgPicture.asset('assets/hamburger-menu.svg'),
+            ),
+          ),
+        ],
+      ),
       body: Container(
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            Text('Upload Image in Flutter',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            SvgPicture.asset('assets/image-upload.svg', width: MediaQuery.of(context).size.height / 1.4,),
+            SizedBox(height: 20,),
+            Text(
+              'Upload Image',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20,),
+            Text(
+              'Click a picture or Browse the images you want to upload',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400,),
             ),
             SizedBox(height: 20,),
             Form(
               key: _formKey,
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 25,
+                    // backgroundColor: Color(0xFFb6b1ff),
+                    backgroundColor: Color(0xFF6159e6),
+                    child: IconButton(
+                      icon: SvgPicture.asset('assets/camera.svg'),
+                      onPressed: null,
+                      padding: EdgeInsets.all(8),
+                    ),
+                  ),
+                  CircleAvatar(
+                    radius: 25,
+                    // backgroundColor: Color(0xFFb6b1ff),
+                    backgroundColor: Color(0xFF6159e6),
+                    child: IconButton(
+                      icon: SvgPicture.asset('assets/gallery.svg'),
+                      onPressed: null,
+                      padding: EdgeInsets.all(8),
+                    ),
+                  ),
+                ],
+              ),
+              /*child: Column(
                 children: <Widget>[
                   RaisedButton(
                     onPressed: _choose,
@@ -68,7 +124,7 @@ class _UserFormState extends State<UserForm> {
                   SizedBox(height: 20,),
                   file == null ? Text('No Image Selected') : Image.file(file)
                 ],
-              ),
+              ),*/
             ),
           ],
         ),
